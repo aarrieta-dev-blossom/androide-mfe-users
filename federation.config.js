@@ -1,0 +1,28 @@
+const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');
+
+module.exports = withNativeFederation({
+    name: 'mfe-users',
+
+    exposes: {
+        './routes': './src/app/users/users.routes.ts',
+    },
+
+    shared: {
+        ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
+    },
+
+    skip: [
+        'rxjs/ajax',
+        'rxjs/fetch',
+        'rxjs/testing',
+        'rxjs/webSocket',
+        '@angular-devkit/build-angular',
+        '@angular/build',
+        '@angular/cli',
+        '@angular/compiler-cli',
+    ],
+
+    features: {
+        ignoreUnusedDeps: true
+    }
+});
