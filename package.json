@@ -22,6 +22,7 @@
     "@angular/router": "21.0.0",
     "@dreso/lib": "file:../dreso-lib/dist/dreso",
     "@ngbracket/ngx-layout": "20.0.1",
+    "ngx-scrollbar": "^18.0.0",
     "@softarc/native-federation-node": "^3.3.4",
     "es-module-shims": "^1.5.12",
     "rxjs": "7.8.2",

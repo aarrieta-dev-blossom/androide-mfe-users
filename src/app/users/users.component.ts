@@ -1,8 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { SettingsService } from '@dreso/lib';
+
+interface User {
+    id: number;
+    name: string;
+    email: string;
+}
 
 @Component({
     selector: 'app-users',
@@ -17,12 +24,11 @@ import { MatCardModule } from '@angular/material/card';
             <mat-card>
                 <mat-card-header>
                     <mat-card-title>Users Microfrontend</mat-card-title>
-                    <mat-card-subtitle>Loaded from remote MFE on port 4201</mat-card-subtitle>
+                    <mat-card-subtitle>Theme: {{ settings().theme }}</mat-card-subtitle>
                 </mat-card-header>
                 <mat-card-content>
-                    <p>This component is loaded via Native Federation from the Users MFE.</p>
                     <div fxLayout="row wrap" fxLayoutGap="16px">
-                        @for (user of users; track user.id) {
+                        @for (user of users(); track user.id) {
                             <mat-card fxFlex="300px" class="user-card">
                                 <mat-card-header>
                                     <mat-icon mat-card-avatar>person</mat-icon>
@@ -46,9 +52,12 @@ import { MatCardModule } from '@angular/material/card';
     `]
 })
 export class UsersComponent {
-    users = [
+    private settingsService = inject(SettingsService);
+    settings = this.settingsService.settings;
+
+    users = signal<User[]>([
         { id: 1, name: 'John Doe', email: 'john@example.com' },
         { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
         { id: 3, name: 'Bob Wilson', email: 'bob@example.com' }
-    ];
+    ]);
 }
